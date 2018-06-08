@@ -14,8 +14,18 @@ from keras.layers import Embedding, Dense, Flatten
 from keras.callbacks import Callback
 import matplotlib.pyplot as plt
 
+###
+# Get the GoogleNews-vectors-negative300.bin into the google folder
+# Get the binary into readable format
+###
+# https://stackoverflow.com/questions/27324292/convert-word2vec-bin-file-to-text
+# from gensim.models.keyedvectors import KeyedVectors
+# model = KeyedVectors.load_word2vec_format('./google/GoogleNews-vectors-negative300.bin', binary=True)
+# model.save_word2vec_format('./google/GoogleNews-vectors-negative300.txt', binary=False)
+
+
 # https://machinelearningmastery.com/use-word-embedding-layers-deep-learning-keras/
-embedding_file = open('./GoogleNews-vectors-negative300_lite.txt')
+embedding_file = open('./google/GoogleNews-vectors-negative300_lite.txt')
 embedding_file.readline()
 embedding_indices = dict()
 for line in embedding_file:
@@ -24,6 +34,7 @@ for line in embedding_file:
     coefs = np.asarray(values[1:], dtype=np.float32)
     embedding_indices[word] = coefs
 embedding_file.close()
+
 
 def get_model(e):
     model = Sequential()
@@ -67,15 +78,6 @@ for chosen_dataset in range(len(datasets)):
     tokenizer = Tokenizer()
     tokenizer.fit_on_texts(glob_text_uniq)
     vocab_size = len(tokenizer.word_index) + 1
-
-    ###
-    # Get the binary into readable format
-    ###
-    # https://stackoverflow.com/questions/27324292/convert-word2vec-bin-file-to-text
-    # from gensim.models.keyedvectors import KeyedVectors
-    # model = KeyedVectors.load_word2vec_format('./GoogleNews-vectors-negative300.bin', binary=True)
-    # model.save_word2vec_format('./GoogleNews-vectors-negative300.txt', binary=False)
-
 
     ###
     # Load weights into keras readable format
