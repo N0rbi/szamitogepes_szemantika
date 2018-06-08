@@ -162,5 +162,6 @@ plt.plot([array_type.min(), array_type.max()], [array_type.min(), array_type.max
 for i, show_array in enumerate(array_type):
     show_array = np.array(show_array).T
 
-    plt.plot(show_array[:, 0], show_array[:, 1], colors[i]+'o')
-    plt.show()
+    plt.plot(show_array[:, 0], show_array[:, 1], colors[i]+'.')
+
+plt.show()
